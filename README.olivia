@@ -1,0 +1,55 @@
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+1) Recommended environment for Olivia
+
+   module reset
+   module load NRIS/CPU
+   module load GSL/2.8-intel-compilers-2024.2.0
+   module load ESMF/8.8.0-intel-2024a-ParallelIO-2.6.5
+   module load UDUNITS/2.2.28-GCCcore-13.3.0
+   module load FFTW/3.3.10-GCC-13.3.0
+   module load CMake/3.29.3-GCCcore-13.3.0
+
+   execute the following line to get the environment (adjust the path if needed): 
+   source ~/NERSC-HYCOM-CICE/olivia_env.sh  
+
+2) Compiling hycom_all under NERSC-HYCOM-CICE/hycom/hycom_ALL/hycom_2.2.72_ALL
+
+   # Define "setenv ARCH intelIFX" in Make_all.src
+   csh Make_all.com
+
+   !! NOT COMPLETE
+
+        Netcdf routines are partly compiled right, 
+        csh Make_ncdf.com
+
+        but for someones are interested,
+        
+3) Compiling MSCPROGS under NERSC-HYCOM-CICE/hycom/MSCPROGS/src
+
+       Go to NERSC-HYCOM-CICE/hycom/MSCPROGS/src/Make.Inc/
+       execute:
+          ln -s make.olivia.ifx make.inc
+          cd ../
+          gmake clean
+          gmake all
+          gmake install
+
+
+# Not fully completed on Olivia yet:   
+4) prepare the python tools on Olivia
+
+  Adapt the $PYLIBSPATH variable in py-nhc-env-post.sh
+
+  Make sure the `hpc-containerize` module is loaded.
+
+  run `create_python_env.sh`.
+
+  To load the python environment, add /path/to/NERSC-HYCOM-CICE/environment/py-nhc/py-nhc-env/bin 
+  to $PATH.
+
+
+# Not completed on Olivia yet:
+4) Compiling hycom_cice under TP0a1.00/expt_01.0
+   At current, there are two HYCOM versions for chosen: 2.2.98 and 2.3, which is defined in EXPT.src and blkdat.input (iversn)
+
+   compile_model.sh -m betzy -u ifort
