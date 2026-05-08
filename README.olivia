@@ -35,12 +35,13 @@
           gmake install
 
 
-# Not fully completed on Olivia yet:   
 4) prepare the python tools on Olivia
 
-  Adapt the $PYLIBSPATH variable in py-nhc-env-post.sh
+  NB: Adapt the $PYLIBSPATH variable in py-nhc-env-post.sh
 
-  Make sure the `hpc-containerize` module is loaded.
+  Make sure the `hpc-containerize` module is loaded:
+      module load NRIS/CPU
+      module load hpc-container-wrapper
 
   run `create_python_env.sh`.
 

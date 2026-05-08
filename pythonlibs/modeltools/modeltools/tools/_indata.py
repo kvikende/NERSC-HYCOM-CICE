@@ -116,7 +116,7 @@ class NetcdfFieldReader(FieldReader) :
             unit = cfunits.Units(unit_string)
 
             if i not in self._coordvar.keys() :
-               # Convert to datetime. use netcdftime as handling is better. 
+               # Convert to datetime. use cftime as handling is better. 
                coordvals = numpy.array(self._nc.variables[i][:])
                if unit.isreftime :
 
