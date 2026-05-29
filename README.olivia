@@ -10,7 +10,7 @@
    module load CMake/3.29.3-GCCcore-13.3.0
 
    execute the following line to get the environment (adjust the path if needed): 
-   source ~/NERSC-HYCOM-CICE/olivia_env.sh  
+   source ~/NERSC-HYCOM-CICE/environment/olivia_env.sh
 
 2) Compiling hycom_all under NERSC-HYCOM-CICE/hycom/hycom_ALL/hycom_2.2.72_ALL
 
@@ -34,8 +34,27 @@
           gmake all
           gmake install
 
+4) Compiling hycom_cice under TP0a1.00/expt_01.0 (Untested)
 
-4) prepare the python tools on Olivia
+   Use cluster selection for Olivia as the `hostname -d` method doesn't work
+
+      compile_model.sh -c olivia -u ifx
+
+   The added -c option sets SITE/cluster explicitly and bypasses hostname/domain 
+   autodetection.
+
+   This should select these build files which were prepared for Olivia:
+      hycom/RELO/config/Linux.olivia.ifx_cice.V22
+      hycom/RELO/config/Linux.olivia.ifx_cice.V23
+      cice/Release-5.1/bld/Macros.Linux.olivia.ifx
+
+   These are some of the issues when running `create_ref_case.sh` that I've found that is not fixed:
+      - There is a module load at line 132 in `create_ref_case.sh`.
+      - In bin/ice_climatology/extract_clim_iceh.sh there is a module load at line 87
+        and 90. The equivalent modules on Olivia are not compatible with the compilation 
+        environment modules.
+
+5) prepare the python tools on Olivia
 
   NB: Adapt the $PYLIBSPATH variable in py-nhc-env-post.sh
 
@@ -48,9 +67,3 @@
   To load the python environment, add /path/to/NERSC-HYCOM-CICE/environment/py-nhc/py-nhc-env/bin 
   to $PATH.
 
-
-# Not completed on Olivia yet:
-4) Compiling hycom_cice under TP0a1.00/expt_01.0
-   At current, there are two HYCOM versions for chosen: 2.2.98 and 2.3, which is defined in EXPT.src and blkdat.input (iversn)
-
-   compile_model.sh -m betzy -u ifort
